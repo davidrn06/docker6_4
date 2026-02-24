@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
+// 1. Añadimos la variable de entorno aquí arriba
+const API = import.meta.env.VITE_API_URL;
+
 export const useMenuAuthHook = () => {
   const [isOpenMenuAuth, setIsOpenMenuAuth] = useState(false);
   const [isOpenAccount, setIsOpenAccount] = useState(false);
@@ -16,11 +19,9 @@ export const useMenuAuthHook = () => {
   };
 
   const handleClickLogout = () => {
-    // Eliminar el token de las cookies al cerrar sesión y actualizar el estado del token en la cookie
     Cookies.remove("token");
     setToken("");
     setDataUser([]);
-
     console.log("Se ha cerrado sesión");
   };
 
@@ -31,7 +32,8 @@ export const useMenuAuthHook = () => {
     const userData = { email, password };
 
     try {
-      const response = await fetch("http://localhost:3000/api/v1/login", {
+      // 2. Cambiamos localhost por ${API}
+      const response = await fetch(`${API}/api/v1/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userData),
@@ -78,8 +80,9 @@ export const useMenuAuthHook = () => {
     const verifyToken = async () => {
       if (token) {
         try {
+          // 3. Cambiamos localhost por ${API}
           const response = await fetch(
-            "http://localhost:3000/api/v1/verify-token",
+            `${API}/api/v1/verify-token`,
             {
               method: "POST",
               headers: {
@@ -106,8 +109,9 @@ export const useMenuAuthHook = () => {
     const refreshToken = async () => {
       if (token) {
         try {
+          // 4. Cambiamos localhost por ${API}
           const response = await fetch(
-            "http://localhost:3000/api/v1/refresh-token",
+            `${API}/api/v1/refresh-token`,
             {
               method: "POST",
               headers: {

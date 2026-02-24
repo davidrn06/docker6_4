@@ -10,6 +10,7 @@ import { TextOptionMenuAuthComponent } from "./TextOptionMenuAuth/TextOptionMenu
 import { CheckAcceptMenuAuthComponent } from "./CheckAcceptMenuAuth/CheckAcceptMenuAuthComponent";
 
 //Context
+const API = import.meta.env.VITE_API_URL; // <--- Bien aquí
 import { AuthContext } from "../../context/AuthContext/useAuthContext";
 
 //JSONs
@@ -38,7 +39,7 @@ export const MenuAuthComponent = () => {
             onSubmit={(e) =>
               handleSubmitDataRegister(
                 e,
-                "http://localhost:3000/api/v1/register"
+                `${API}/api/v1/register` // <--- Arreglado
               )
             }
           >
@@ -83,7 +84,10 @@ export const MenuAuthComponent = () => {
             className="form__menu__auth"
             method="POST"
             onSubmit={(e) =>
-              handleSubmitData(e, "http://localhost:3000/api/v1/login")
+              handleSubmitData(
+                e, 
+                `${API}/api/v1/login` // <--- AQUÍ ES DONDE TE FALTABA CAMBIARLO
+              )
             }
           >
             <div className="container__menu__auth__form">
